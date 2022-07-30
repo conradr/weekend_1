@@ -78,34 +78,13 @@ def is_pet_in_stock(petshop, pet_bought):
 def sell_pet_to_customer(petshop, pet_bought, customer):
     if is_pet_in_stock(petshop, pet_bought) and customer_can_afford_pet(customer, pet_bought):
         # remove customer cash
-        # customer["cash"] -= pet_bought["price"]
         remove_customer_cash(customer, pet_bought["price"])
         # add cash to till
-        #petshop["admin"]["total_cash"] += pet_bought["price"]
         add_or_remove_cash(petshop, pet_bought["price"])
         # remove Arthur from petshop stock
         # doesn't work - remove_pet_by_name(petshop, pet_bought)
         # add arthur to customer
         add_pet_to_customer(customer, pet_bought)
-        # customer["pets"].append(pet_bought)
         # increase pets sold
         # could you do len here?
         increase_pets_sold(petshop, 1)
-        #petshop["admin"]["pets_sold"] += 1
-
-
-# def remove_pet_by_name(petshop_name, pet_name):
-#     for animal in petshop_name["pets"]:
-#         if animal["name"] == pet_name:
-#             animal.pop(pet_name)
-#         return petshop_name["pets"]
-
-# def remove_pet_by_name(petshop, name):
-#     new_list = []
-#     for pet in petshop["pets"]:
-#         if name != pet["name"]:
-#             new_list += pet
-#     petshop["pets"] = new_list
-
-    # for pet in petshop["pets"]:
-    #     pet.pop(name)
