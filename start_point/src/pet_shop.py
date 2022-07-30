@@ -1,7 +1,3 @@
-
-from tkinter import E
-
-
 def get_pet_shop_name(petshop):
     return petshop["name"]
 
@@ -40,6 +36,15 @@ def find_pet_by_name(petshop, name):
             return pet
 
 
+def remove_pet_by_name(petshop, pet_name):
+    pet_to_remove = []
+    for pet in petshop["pets"]:
+        if pet["name"] == pet_name:
+            pet_to_remove = pet
+
+    petshop["pets"].remove(pet_to_remove)
+
+
 def add_pet_to_stock(petshop, new_pet):
     petshop["pets"].append(new_pet)
     return len(petshop["pets"])
@@ -63,24 +68,31 @@ def add_pet_to_customer(customer, new_pet):
 
 
 def customer_can_afford_pet(customer, new_pet):
-    return customer["cash"] > 0
+    return customer["cash"] >= new_pet["price"]
 
 
-def customer_can_afford_pet(customer, new_pet):
-    return customer["cash"] >= 100
+def is_pet_in_stock(petshop, pet_bought):
+    return pet_bought in petshop["pets"]
 
 
 def sell_pet_to_customer(petshop, pet_bought, customer):
-    if pet_bought in petshop["pets"] and customer["cash"] >= pet_bought["price"]:
-        # find / remove arthur?
+    if is_pet_in_stock(petshop, pet_bought) and customer_can_afford_pet(customer, pet_bought):
         # remove customer cash
-        customer["cash"] -= pet_bought["price"]
+        # customer["cash"] -= pet_bought["price"]
+        remove_customer_cash(customer, pet_bought["price"])
         # add cash to till
-        petshop["admin"]["total_cash"] += pet_bought["price"]
+        #petshop["admin"]["total_cash"] += pet_bought["price"]
+        add_or_remove_cash(petshop, pet_bought["price"])
+        # remove Arthur from petshop stock
+        # doesn't work - remove_pet_by_name(petshop, pet_bought)
         # add arthur to customer
-        customer["pets"].append(pet_bought)
+        add_pet_to_customer(customer, pet_bought)
+        # customer["pets"].append(pet_bought)
         # increase pets sold
-        petshop["admin"]["pets_sold"] += 1
+        # could you do len here?
+        increase_pets_sold(petshop, 1)
+        #petshop["admin"]["pets_sold"] += 1
+
 
 # def remove_pet_by_name(petshop_name, pet_name):
 #     for animal in petshop_name["pets"]:
