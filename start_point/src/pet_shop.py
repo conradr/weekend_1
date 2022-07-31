@@ -47,7 +47,6 @@ def remove_pet_by_name(petshop, pet_name):
 
 def add_pet_to_stock(petshop, new_pet):
     petshop["pets"].append(new_pet)
-    return len(petshop["pets"])
 
 
 def get_customer_cash(customer):
@@ -82,9 +81,8 @@ def sell_pet_to_customer(petshop, pet_bought, customer):
         # add cash to till
         add_or_remove_cash(petshop, pet_bought["price"])
         # remove Arthur from petshop stock
-        # doesn't work - remove_pet_by_name(petshop, pet_bought)
+        remove_pet_by_name(petshop, pet_bought["name"])
         # add arthur to customer
         add_pet_to_customer(customer, pet_bought)
         # increase pets sold
-        # could you do len here?
         increase_pets_sold(petshop, 1)
